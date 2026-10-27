@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2cousins cafe - Luxury Menu</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts including Tajawal and Noto Kufi Arabic for proper Kurdish character joining -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Noto+Kufi+Arabic:wght@400;600;700;800&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            light: '#F5E397',
+                            DEFAULT: '#D4AF37',
+                            dark: '#A37E17',
+                            glow: '#E6C663'
+                        },
+                        cafe: {
+                            black: '#0A0908',
+                            dark: '#14110F',
+                            brown: '#23150F',
+                            brownLight: '#382218',
+                            goldBorder: 'rgba(212, 175, 55, 0.4)'
+                        }
+                    },
+                    fontFamily: {
+                        heading: ['Cinzel', 'Tajawal', 'serif'],
+                        kurdish: ['Tajawal', 'Noto Kufi Arabic', 'system-ui', 'sans-serif'],
+                        body: ['Inter', 'Tajawal', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Base Styling and Kurdish Font Joining Optimization */
+        html, body {
+            background-color: #0A0908;
+            color: #E2E8F0;
+            font-family: 'Inter', 'Tajawal', 'Noto Kufi Arabic', system-ui, -apple-system, sans-serif;
+            overflow-x: hidden;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Ensure continuous cursive joining for Arabic & Kurdish scripts */
+        [dir="rtl"] {
+            font-family: 'Tajawal', 'Noto Kufi Arabic', 'Segoe UI', system-ui, sans-serif !important;
+        }
+
+        /* Gold Gradient and Glow FX */
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #FFF7D6 0%, #D4AF37 50%, #9E7A12 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gold-border-glow {
+            border: 1.5px solid rgba(212, 175, 55, 0.35);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.12);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .gold-border-glow:hover, .gold-border-glow.active {
+            border-color: #D4AF37;
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .gold-btn-solid {
+            background: linear-gradient(135deg, #E6C663 0%, #D4AF37 50%, #B38C1B 100%);
+            color: #0A0908;
+            font-weight: 700;
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.35);
+            transition: all 0.3s ease;
+        }
+
+        .gold-btn-solid:hover {
+            box-shadow: 0 6px 25px rgba(212, 175, 55, 0.6);
+            transform: translateY(-2px);
+        }
+
+        /* Glassmorphism Panels */
+        .glass-panel {
+            background: rgba(35, 21, 15, 0.8);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0A0908;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #382218;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #D4AF37;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.35s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between relative selection:bg-gold selection:text-black">
+
+    <!-- Ambient Gold Glows Background -->
+    <div class="fixed inset-0 pointer-events-none z-0 opacity-20 overflow-hidden">
+        <div class="absolute -top-40 -left-40 w-96 h-96 bg-gold rounded-full filter blur-[130px]"></div>
+        <div class="absolute top-1/2 -right-40 w-96 h-96 bg-cafe-brownLight rounded-full filter blur-[110px]"></div>
+        <div class="absolute -bottom-40 left-1/3 w-96 h-96 bg-gold rounded-full filter blur-[150px]"></div>
+    </div>
+
+    <!-- MAIN APP WRAPPER -->
+    <div class="relative z-10 w-full min-h-screen flex flex-col">
+
+        <!-- ================= PAGE 1: LANGUAGE SELECTION ================= -->
+        <section id="languageScreen" class="flex-1 flex flex-col justify-center items-center px-4 py-8 animate-fade-in">
+            <div class="w-full max-w-md text-center">
+                
+                <!-- Cafe Branding -->
+                <div class="mb-8">
+                    <div class="w-24 h-24 mx-auto mb-4 rounded-full glass-panel flex items-center justify-center border-2 border-gold shadow-lg shadow-gold/25">
+                        <i class="fa-solid fa-mug-hot text-4xl text-gold"></i>
+                    </div>
+                    <h1 class="text-4xl sm:text-5xl font-extrabold font-heading gold-gradient-text tracking-wider uppercase mb-1">2cousins</h1>
+                    <p class="text-gold/70 text-xs sm:text-sm font-medium tracking-widest uppercase">CAFE & RESTAURANT</p>
+                    <div class="w-32 h-[1px] bg-gradient-to-r from-transparent via-gold to-transparent mx-auto mt-4"></div>
+                </div>
+
+                <!-- Subtitle -->
+                <p id="langSelectInstruction" class="text-gray-300 text-sm mb-6 font-medium">پێشوازی! کاتێک زمان هەڵبژێرە / Welcome! Please select language</p>
+
+                <!-- Language Selection Buttons -->
+                <div class="space-y-3 mb-6">
+                    <!-- Kurdish Main Button -->
+                    <button onclick="handleLanguageSelect('kurdish')" id="btn-kurdish" class="lang-btn w-full py-3.5 px-6 rounded-xl glass-panel gold-border-glow text-lg font-bold flex items-center justify-between text-gold hover:text-white transition-all">
+                        <span>کوردی</span>
+                        <i class="fa-solid fa-chevron-down text-sm transition-transform duration-300" id="kurdish-arrow"></i>
+                    </button>
+
+                    <!-- Kurdish Sub-Dialects (Badini / Sorani) -->
+                    <div id="kurdishDialects" class="hidden pl-6 space-y-2.5 overflow-hidden transition-all duration-300">
+                        <!-- Badini Dialect -->
+                        <button onclick="handleDialectSelect('badini')" id="btn-badini" class="dialect-btn w-full py-3 px-5 rounded-lg bg-cafe-brown/90 border border-gold/40 text-gold-light hover:bg-gold hover:text-black font-bold flex items-center justify-between transition-all">
+                            <span>بادینی (Badini)</span>
+                            <i class="fa-solid fa-check text-xs opacity-0" id="check-badini"></i>
+                        </button>
+                        <!-- Sorani Dialect -->
+                        <button onclick="handleDialectSelect('sorani')" id="btn-sorani" class="dialect-btn w-full py-3 px-5 rounded-lg bg-cafe-brown/90 border border-gold/40 text-gold-light hover:bg-gold hover:text-black font-bold flex items-center justify-between transition-all">
+                            <span>سورانی (Sorani)</span>
+                            <i class="fa-solid fa-check text-xs opacity-0" id="check-sorani"></i>
+                        </button>
+                    </div>
+
+                    <!-- Arabic Button -->
+                    <button onclick="handleLanguageSelect('arabic')" id="btn-arabic" class="lang-btn w-full py-3.5 px-6 rounded-xl glass-panel gold-border-glow text-lg font-bold flex items-center justify-between text-gold hover:text-white transition-all">
+                        <span>عربي</span>
+                        <span class="text-xs font-normal text-gold/60 uppercase">Arabic</span>
+                    </button>
+
+                    <!-- English Button -->
+                    <button onclick="handleLanguageSelect('english')" id="btn-english" class="lang-btn w-full py-3.5 px-6 rounded-xl glass-panel gold-border-glow text-lg font-bold flex items-center justify-between text-gold hover:text-white transition-all">
+                        <span>English</span>
+                        <span class="text-xs font-normal text-gold/60 uppercase">English</span>
+                    </button>
+
+                    <!-- Turkish Button -->
+                    <button onclick="handleLanguageSelect('turkish')" id="btn-turkish" class="lang-btn w-full py-3.5 px-6 rounded-xl glass-panel gold-border-glow text-lg font-bold flex items-center justify-between text-gold hover:text-white transition-all">
+                        <span>Türkçe</span>
+                        <span class="text-xs font-normal text-gold/60 uppercase">Turkish</span>
+                    </button>
+                </div>
+
+                <!-- Dynamic Enter Button Section -->
+                <div id="enterButtonContainer" class="hidden mt-6 animate-fade-in">
+                    <button onclick="goToTableSelection()" id="btn-enter" class="gold-btn-solid w-full py-4 px-8 rounded-xl text-xl flex items-center justify-center gap-3">
+                        <span id="enterBtnText">Enter Menu</span>
+                        <i class="fa-solid fa-arrow-right text-lg" id="enterBtnIcon"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= PAGE 2: TABLE SELECTION (3 Rows x 5 Columns = 15 Tables) ================= -->
+        <section id="tableScreen" class="hidden flex-1 flex flex-col justify-center items-center px-4 py-8 animate-fade-in">
+            <div class="w-full max-w-2xl text-center">
+                
+                <!-- Header -->
+                <div class="mb-6">
+                    <span class="text-xs font-bold text-gold tracking-widest uppercase border border-gold/30 px-3.5 py-1.5 rounded-full bg-gold/10">Step 2 of 3</span>
+                    <h2 id="tableScreenTitle" class="text-3xl sm:text-4xl font-extrabold font-heading gold-gradient-text mt-3 mb-2">مێزێ هەڵبژێرە</h2>
+                    <p id="tableScreenSubtitle" class="text-gray-300 text-sm">تکایە ژمارەی مێزەکەت دیاری بکە بۆ دەستپێکردن</p>
+                </div>
+
+                <!-- 15 Tables Grid (3 Rows x 5 Columns) -->
+                <div class="grid grid-cols-5 gap-2.5 sm:gap-4 my-6" id="tablesGrid">
+                    <!-- Dynamic Table Cards via JS -->
+                </div>
+
+                <!-- Actions -->
+                <div class="flex flex-col sm:flex-row gap-3 mt-6 max-w-md mx-auto">
+                    <button onclick="backToLanguageSelection()" class="w-full sm:w-1/3 py-3.5 rounded-xl border border-gold/40 text-gold hover:bg-gold/10 font-bold text-sm transition-all" id="btnBackLang">
+                        Back / زڤڕین
+                    </button>
+                    <button onclick="confirmTableAndOpenMenu()" id="btnConfirmTable" disabled class="w-full sm:w-2/3 py-3.5 rounded-xl bg-gray-800 text-gray-500 font-bold text-base cursor-not-allowed transition-all border border-gold/10">
+                        <span id="btnConfirmTableText">Select a Table</span>
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- ================= PAGE 3: MAIN CAFE MENU ================= -->
+        <section id="menuScreen" class="hidden flex-1 flex flex-col pb-28 animate-fade-in">
+
+            <!-- Sticky Top Header -->
+            <header class="sticky top-0 z-30 glass-panel border-b border-gold/30 px-4 py-3">
+                <div class="max-w-4xl mx-auto flex items-center justify-between">
+                    <!-- Table Badge & Change Language Button -->
+                    <div class="flex items-center gap-2">
+                        <button onclick="goToTableSelection()" class="flex items-center gap-1.5 text-gold hover:text-gold-light transition-colors text-xs sm:text-sm font-bold py-1.5 px-3 rounded-lg border border-gold/40 bg-cafe-brown/80">
+                            <i class="fa-solid fa-chair text-gold"></i>
+                            <span id="headerTableBadge">Table --</span>
+                        </button>
+                        <button onclick="backToLanguageSelection()" class="text-gold/70 hover:text-gold text-xs py-1.5 px-2.5 rounded border border-gold/20 bg-cafe-black">
+                            <i class="fa-solid fa-globe"></i>
+                        </button>
+                    </div>
+
+                    <!-- Cafe Name -->
+                    <div class="text-center">
+                        <h2 class="text-lg sm:text-2xl font-black font-heading gold-gradient-text tracking-wide">2cousins cafe</h2>
+                    </div>
+
+                    <!-- Language Indicator Badge -->
+                    <div class="flex items-center">
+                        <span class="text-xs bg-gold/10 text-gold border border-gold/40 px-3 py-1 rounded-full font-bold" id="dialectBadge">Badini</span>
+                    </div>
+                </div>
+
+                <!-- Search Input Bar -->
+                <div class="max-w-4xl mx-auto mt-3">
+                    <div class="relative">
+                        <input type="text" id="searchInput" onkeyup="filterMenu()" placeholder="Search coffee, drinks, shisha..." class="w-full py-2.5 pl-10 pr-4 rounded-xl bg-cafe-black/90 border border-gold/30 text-white placeholder-gray-500 focus:outline-none focus:border-gold text-sm transition-all">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-gold/60 text-sm"></i>
+                    </div>
+                </div>
+
+                <!-- Horizontal Category Tabs -->
+                <div class="max-w-4xl mx-auto mt-3 flex gap-2 overflow-x-auto pb-1 scrollbar-none" id="categoryBar">
+                    <!-- Categories dynamically generated via JS -->
+                </div>
+            </header>
+
+            <!-- Main Food & Drink Items -->
+            <main class="flex-1 max-w-4xl w-full mx-auto px-4 pt-6">
+                <!-- Section Header -->
+                <div class="flex items-center justify-between mb-4 border-b border-gold/20 pb-2.5">
+                    <h3 id="currentCategoryTitle" class="text-xl sm:text-2xl font-bold text-gold font-heading">Hot Coffee</h3>
+                    <span id="itemCountBadge" class="text-xs font-bold text-gray-300 bg-cafe-brown px-3 py-1 rounded-full text-gold/90 border border-gold/20">0 items</span>
+                </div>
+
+                <!-- Menu Items Cards Grid -->
+                <div id="menuItemsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Menu Cards generated dynamically via JS -->
+                </div>
+            </main>
+
+            <!-- BOTTOM-RIGHT FLOATING WAITER SERVICE BUTTON -->
+            <div id="waiterBtnContainer" class="fixed bottom-5 right-5 z-40">
+                <button onclick="callWaiter()" class="w-14 h-14 rounded-full glass-panel border-2 border-gold flex items-center justify-center text-gold shadow-lg shadow-black/90 hover:scale-110 active:scale-95 transition-all group relative">
+                    <i class="fa-solid fa-user-tie text-2xl group-hover:text-gold-light transition-colors"></i>
+                    <span class="absolute -top-1 -right-1 flex h-3.5 w-3.5">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-gold opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-3.5 w-3.5 bg-gold"></span>
+                    </span>
+                </button>
+            </div>
+
+            <!-- BOTTOM-LEFT FLOATING BASKET / CART BUTTON -->
+            <div id="basketBtnContainer" class="fixed bottom-5 left-5 z-40">
+                <button onclick="openCartModal()" class="w-14 h-14 rounded-full glass-panel border-2 border-gold flex items-center justify-center text-gold shadow-lg shadow-black/90 hover:scale-110 active:scale-95 transition-all group relative">
+                    <i class="fa-solid fa-basket-shopping text-2xl group-hover:text-gold-light transition-colors"></i>
+                    <!-- Badge count -->
+                    <span id="cartBadge" class="absolute -top-1 -right-1 bg-gold text-black text-xs font-extrabold rounded-full w-6 h-6 flex items-center justify-center border-2 border-cafe-black shadow">0</span>
+                </button>
+            </div>
+        </section>
+
+
+        <!-- ================= FLOATING WIFI BUTTON (STEP 1 ONLY) ================= -->
+        <div id="wifiBtnContainer" class="fixed bottom-5 left-5 z-40">
+            <button onclick="openWifiModal()" class="w-14 h-14 rounded-full glass-panel border-2 border-gold flex items-center justify-center text-gold shadow-lg shadow-black/90 hover:scale-110 active:scale-95 transition-all group">
+                <i class="fa-solid fa-wifi text-2xl group-hover:text-gold-light transition-colors"></i>
+            </button>
+        </div>
+
+
+        <!-- ================= WIFI INFORMATION MODAL ================= -->
+        <div id="wifiModal" class="fixed inset-0 z-50 flex items-center justify-center px-4 bg-black/85 backdrop-blur-md hidden animate-fade-in">
+            <div class="glass-panel w-full max-w-sm rounded-2xl p-6 border-2 border-gold text-center relative shadow-2xl">
+                <button onclick="closeWifiModal()" class="absolute top-3 right-3 text-gold/60 hover:text-gold p-2 transition-colors">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+
+                <div class="w-16 h-16 rounded-full bg-gold/10 border border-gold mx-auto mb-3 flex items-center justify-center text-gold shadow-md shadow-gold/10">
+                    <i class="fa-solid fa-wifi text-2xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold gold-gradient-text font-heading mb-1" id="wifiModalTitle">Wi-Fi Details</h3>
+                <p class="text-xs text-gray-400 mb-6" id="wifiModalSubtitle">Free High-Speed Guest Internet</p>
+
+                <div class="space-y-3 bg-cafe-black/90 p-4 rounded-xl border border-gold/30 text-left mb-5">
+                    <div class="flex items-center justify-between border-b border-gold/15 pb-2.5">
+                        <span class="text-xs text-gray-400 uppercase font-semibold" id="labelNetwork">Network Name</span>
+                        <span class="text-sm font-extrabold text-gold tracking-wider">2COUSINS</span>
+                    </div>
+
+                    <div class="flex items-center justify-between pt-1">
+                        <div>
+                            <span class="text-xs text-gray-400 uppercase font-semibold block" id="labelPassword">Password</span>
+                            <span class="text-base font-mono font-extrabold text-white tracking-widest">2cousins2026</span>
+                        </div>
+                        <button onclick="copyWifiPassword()" class="bg-gold/20 border border-gold/50 text-gold hover:bg-gold hover:text-black px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5">
+                            <i class="fa-regular fa-copy"></i>
+                            <span id="copyBtnText">Copy</span>
+                        </button>
+                    </div>
+                </div>
+
+                <button onclick="closeWifiModal()" class="gold-btn-solid w-full py-2.5 rounded-xl text-sm uppercase tracking-wide">Close</button>
+            </div>
+        </div>
+
+
+        <!-- ================= BASKET / CART MODAL ================= -->
+        <div id="cartModal" class="fixed inset-0 z-50 flex items-center justify-center px-4 bg-black/85 backdrop-blur-md hidden animate-fade-in">
+            <div class="glass-panel w-full max-w-lg rounded-2xl p-6 border-2 border-gold flex flex-col max-h-[85vh] relative shadow-2xl">
+                <!-- Close Button -->
+                <button onclick="closeCartModal()" class="absolute top-3 right-3 text-gold/60 hover:text-gold p-2 transition-colors">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+
+                <!-- Header -->
+                <div class="flex items-center gap-3 border-b border-gold/20 pb-4 mb-4">
+                    <div class="w-10 h-10 rounded-full bg-gold/10 border border-gold flex items-center justify-center text-gold">
+                        <i class="fa-solid fa-basket-shopping text-lg"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold gold-gradient-text font-heading" id="cartTitle">Your Basket</h3>
+                        <p class="text-xs text-gray-400" id="cartTableSummary">Selected items for Table --</p>
+                    </div>
+                </div>
+
+                <!-- Items Scroll Area -->
+                <div id="cartItemsContainer" class="flex-1 overflow-y-auto space-y-3 pr-1 mb-4">
+                    <!-- Dynamic Cart Items injected here -->
+                </div>
+
+                <!-- Summary Footer -->
+                <div class="border-t border-gold/20 pt-4 space-y-3">
+                    <div class="flex justify-between items-center text-base font-bold">
+                        <span class="text-gray-300" id="cartTotalLabel">Total Amount:</span>
+                        <span class="text-gold text-xl font-mono font-black" id="cartTotalPrice">0 IQD</span>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <button onclick="clearCart()" class="w-1/3 py-3 rounded-xl border border-red-500/40 text-red-400 hover:bg-red-500/10 text-xs font-bold transition-all" id="btnClearCart">
+                            Clear Basket
+                        </button>
+                        <button onclick="checkoutOrder()" id="btnCheckout" class="w-2/3 gold-btn-solid py-3 rounded-xl text-sm font-bold uppercase tracking-wider flex items-center justify-center gap-2">
+                            <span id="btnCheckoutText">Place Order</span>
+                            <i class="fa-solid fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- ================= TOAST NOTIFICATION ================= -->
+        <div id="toast" class="fixed top-5 left-1/2 -translate-x-1/2 z-50 bg-gold text-cafe-black font-extrabold px-6 py-3 rounded-full shadow-2xl border border-white/20 transform -translate-y-20 opacity-0 transition-all duration-300 flex items-center gap-2 text-sm pointer-events-none">
+            <i class="fa-solid fa-circle-check text-lg" id="toastIcon"></i>
+            <span id="toastMsg">Action completed!</span>
+        </div>
+
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // GLOBAL STATE
+        let selectedLanguage = 'badini'; // Default fallback
+        let selectedTableNumber = null;
+        let selectedCategory = 'shisha';
+        let cart = []; // Array of { id, count }
+
+        // LOCALIZATION DICTIONARY WITH CURSIVE joined KURDISH (BADINI & SORANI)
+        const translations = {
+            badini: {
+                name: 'کوردی (بادینی)',
+                direction: 'rtl',
+                enterBtn: 'چوونە ژوورەوە بۆ دەستنیشانکرنا مێزێ',
+                tableTitle: 'مێزا خۆ دەستنیشان بکە',
+                tableSubtitle: 'هیڤیيە ژمارا مێزا خۆ هەلبژێرە دا بچیە ل سەر لیستێ',
+                tableBack: 'زڤڕین',
+                tableSelectPrompt: 'مێزەکێ هەلبژێرە',
+                tableConfirmPrefix: 'بەردەوامبوون ب مێزا ',
+                tableLabel: 'مێزا',
+                searchPlaceholder: 'لێگەڕیان ل ناف مێنیوێ...',
+                itemsCount: 'تشت',
+                wifiTitle: 'زانیاریێن وای فای',
+                wifiSubtitle: 'ئینتەرنێتا بەلاش و بلەز بۆ مێڤانان',
+                networkLabel: 'ناڤێ تۆڕێ',
+                passwordLabel: 'پاسپۆرد',
+                copyBtn: 'کۆپی بکە',
+                copiedMsg: 'پاسپۆرد هاتە کۆپیکرن!',
+                waiterCalled: 'گارسۆن هاتە گازی کرن بۆ مێزا ',
+                waiterBtn: 'گازی گارسۆنی بکە',
+                cartTitle: 'سەبتا تە',
+                cartEmpty: 'سەبتا تە تالە. خارن و ڤەخوارنان زێدە بکە!',
+                cartTotal: 'کۆمێ گشتی',
+                clearCart: 'سەبتێ ڤالا بکە',
+                checkout: 'ناردنا داواکاریێ',
+                orderSuccess: 'داواکاری ب سەرکەفتیانە هاتە هنارتن بۆ مێزا ',
+                addToCart: 'زێدەبکە',
+                currency: 'د.ع',
+                categories: {
+                    shisha: 'نێرگیلە و شیشە',
+                    hot_drinks: 'ڤەخوارنێن گەرم',
+                    cold_drinks: 'ڤەخوارنێن سار',
+                    desserts: 'شریناهی و کێک',
+                    snacks: 'ساندویچ و خفیک'
+                }
+            },
+            sorani: {
+                name: 'کوردی (سورانی)',
+                direction: 'rtl',
+                enterBtn: 'چوونە ژوورەوە بۆ هەڵبژاردنی مێز',
+                tableTitle: 'مێزەکەت هەڵبژێرە',
+                tableSubtitle: 'تکایە ژمارەی مێزەکەت دیاری بکە بۆ چوونە ناو مێنیو',
+                tableBack: 'گەڕانەوە',
+                tableSelectPrompt: 'مێزێک هەڵبژێرە',
+                tableConfirmPrefix: 'بەردەوامبوون بە مێزی ',
+                tableLabel: 'مێزی',
+                searchPlaceholder: 'گەڕان لە مێنیو...',
+                itemsCount: 'بڕگە',
+                wifiTitle: 'زانیاری وایفای',
+                wifiSubtitle: 'ئینتەرنێتی خۆڕایی خێرا بۆ میوانان',
+                networkLabel: 'ناوی تۆڕ',
+                passwordLabel: 'وشەی نهێنی',
+                copyBtn: 'کۆپی بکە',
+                copiedMsg: 'وشەی نهێنی کۆپی کرا!',
+                waiterCalled: 'گارسۆن بانگهێشتکرا بۆ مێزی ',
+                waiterBtn: 'بانگکردنی گارسۆن',
+                cartTitle: 'سەبەتەکەت',
+                cartEmpty: 'سەبەتەکەت بەتاڵە. بڕگەی خۆش زیاد بکە!',
+                cartTotal: 'کۆی گشتی',
+                clearCart: 'سڕینەوەی سەبەتە',
+                checkout: 'ناردنی داواکاری',
+                orderSuccess: 'داواکارییەکە بە سەرکەوتوویی نێردرا بۆ مێزی ',
+                addToCart: 'زیادکردن',
+                currency: 'د.ع',
+                categories: {
+                    shisha: 'نێرگەلە و شیشە',
+                    hot_drinks: 'خواردنەوە گەرمەکان',
+                    cold_drinks: 'خواردنەوە ساردەکان',
+                    desserts: 'شیرینی و کێک',
+                    snacks: 'ساندویچ و خواردنی سووک'
+                }
+            },
+            arabic: {
+                name: 'العربية',
+                direction: 'rtl',
+                enterBtn: 'الدخول لاختيار الطاولة',
+                tableTitle: 'اختر طاولتك',
+                tableSubtitle: 'يرجى تحديد رقم الطاولة للمتابعة إلى القائمة',
+                tableBack: 'رجوع',
+                tableSelectPrompt: 'حدّد طاولة',
+                tableConfirmPrefix: 'المتابعة مع طاولة ',
+                tableLabel: 'طاولة',
+                searchPlaceholder: 'ابحث في القائمة...',
+                itemsCount: 'صنف',
+                wifiTitle: 'معلومات الواي فاي',
+                wifiSubtitle: 'إنترنت مجاني عالي السرعة للضيوف',
+                networkLabel: 'اسم الشبكة',
+                passwordLabel: 'كلمة السر',
+                copyBtn: 'نسخ',
+                copiedMsg: 'تم نسخ كلمة السر بنجاح!',
+                waiterCalled: 'تم استدعاء النادل إلى طاولة ',
+                waiterBtn: 'استدعاء النادل',
+                cartTitle: 'سلة الطلبات',
+                cartEmpty: 'السلة فارغة. أضف عناصر شهية من القائمة!',
+                cartTotal: 'المبلغ الإجمالي',
+                clearCart: 'تفريغ السلة',
+                checkout: 'تأكيد وإرسال الطلب',
+                orderSuccess: 'تم إرسال الطلب بنجاح للطاولة ',
+                addToCart: 'إضافة',
+                currency: 'د.ع',
+                categories: {
+                    shisha: 'الشيشة والنعناع',
+                    hot_drinks: 'المشروبات الساخنة',
+                    cold_drinks: 'المشروبات الباردة',
+                    desserts: 'الحلويات والكيك',
+                    snacks: 'الساندويتشات والوجبات'
+                }
+            },
+            english: {
+                name: 'English',
+                direction: 'ltr',
+                enterBtn: 'Enter to Select Table',
+                tableTitle: 'Select Your Table',
+                tableSubtitle: 'Choose your table number to proceed to the menu',
+                tableBack: 'Back',
+                tableSelectPrompt: 'Select a Table',
+                tableConfirmPrefix: 'Continue with Table ',
+                tableLabel: 'Table',
+                searchPlaceholder: 'Search menu items...',
+                itemsCount: 'items',
+                wifiTitle: 'Wi-Fi Details',
+                wifiSubtitle: 'Free High-Speed Guest Internet',
+                networkLabel: 'Network Name',
+                passwordLabel: 'Password',
+                copyBtn: 'Copy',
+                copiedMsg: 'Wi-Fi Password copied!',
+                waiterCalled: 'Waiter called to Table ',
+                waiterBtn: 'Call Waiter',
+                cartTitle: 'Your Basket',
+                cartEmpty: 'Your basket is empty. Add items from the menu!',
+                cartTotal: 'Total Amount',
+                clearCart: 'Clear Basket',
+                checkout: 'Place Order',
+                orderSuccess: 'Order placed successfully for Table ',
+                addToCart: 'Add',
+                currency: 'IQD',
+                categories: {
+                    shisha: 'Shisha & Hookah',
+                    hot_drinks: 'Hot Coffee & Tea',
+                    cold_drinks: 'Cold Drinks & Juices',
+                    desserts: 'Desserts & Cakes',
+                    snacks: 'Snacks & Sandwiches'
+                }
+            },
+            turkish: {
+                name: 'Türkçe',
+                direction: 'ltr',
+                enterBtn: 'Masa Seçimine Geç',
+                tableTitle: 'Masanızı Seçin',
+                tableSubtitle: 'Menüye geçmek için lütfen masa numaranızı seçin',
+                tableBack: 'Geri',
+                tableSelectPrompt: 'Bir Masa Seçin',
+                tableConfirmPrefix: 'Masa ',
+                tableLabel: 'Masa',
+                searchPlaceholder: 'Menüde ara...',
+                itemsCount: 'ürün',
+                wifiTitle: 'Wi-Fi Bilgileri',
+                wifiSubtitle: 'Ücretsiz Yüksek Hızlı İnternet',
+                networkLabel: 'Ağ Adı',
+                passwordLabel: 'Şifre',
+                copyBtn: 'Kopyala',
+                copiedMsg: 'Şifre kopyalandı!',
+                waiterCalled: 'Garson çağrıldı: Masa ',
+                waiterBtn: 'Garson Çağır',
+                cartTitle: 'Sepetiniz',
+                cartEmpty: 'Sepetiniz boş. Menüden lezzetli ürünler ekleyin!',
+                cartTotal: 'Toplam Tutar',
+                clearCart: 'Sepeti Temizle',
+                checkout: 'Siparişi Onayla',
+                orderSuccess: 'Siparişiniz başarıyla alındı: Masa ',
+                addToCart: 'Ekle',
+                currency: 'IQD',
+                categories: {
+                    shisha: 'Nargile Çeşitleri',
+                    hot_drinks: 'Sıcak Kahveler',
+                    cold_drinks: 'Soğuk İçecekler',
+                    desserts: 'Tatlılar & Pastalar',
+                    snacks: 'Atıştırmalıklar'
+                }
+            }
+        };
+
+        // COMPREHENSIVE MENU DATABASE (SHISHA, COFFEE, COLD DRINKS, DESSERTS, SNACKS)
+        const menuItems = [
+            // ================= SHISHA / HOOKAH =================
+            {
+                id: 101,
+                category: 'shisha',
+                priceIQD: 10000,
+                image: 'https://images.unsplash.com/photo-1527661591475-527312dd65f5?w=400&auto=format&fit=crop&q=80',
+                names: {
+                    badini: 'نێرگیلا تفاحتين (سێڤێن دوو)',
+                    sorani: 'نێرگەلەی تفاحتين (دوو سێو)',
+                    arabic: 'شيشة تفاحتين فاخر (Double Apple)',
+                    english: 'Classic Double Apple Shisha',
+                    turkish: 'Çift Elma Nargile'
+                },
+                descriptions: {
+                    badini: 'نێرگیلا سێڤێن دوو یا ڕەسەن ب خەلوزێ سروشتی و تامەکا بەهێز.',
+                    sorani: 'نێرگەلەی ڕەسەنی دوو سێو بە خەڵوزی سروشتی و بۆنێکی خۆش.',
+                    arabic: 'تفاحتين فاخر مع فحم طبيعي ونكهة قوية تدوم طويلاً.',
+                    english: 'Traditional double apple flavor served with premium natural coals.',
+                    turkish: 'Doğal kömür ile sunulan klasik çift elma aromalı nargile.'
+                }
+            },
+            {
+                id: 102,
+                category: 'shisha',
+                priceIQD: 10000,
+                image: 'https://images.unsplash.com/photo-1542332213-9b5a5a3fad35?w=400&auto=format&fit=crop&q=80',
+                names: {
+                    badini: 'نێرگیلا عەنەب و نەعناع',
+                    sorani: 'نێرگەلەی ترێ و نەعنا',
+                    arabic: 'شيشة عنب ونعناع',
+                    english: 'Mint Grape Shisha',
+                    turkish: 'Üzüm Nane Nargile'
+                },
+                descriptions: {
+                    badini: 'تێکەلا تێچوویا تڕیێ شیرین دگەل نەعناعا سار.',
+                    sorani: 'تێکەڵەی ترێی شیرین لەگەڵ ساردی نەعنای ڕەعنان.',
+                    arabic: 'مزج مثالي بين حلاوة العنب وانتعاش النعناع البارد.',
+                    english: 'Smooth blend of sweet juicy grapes with refreshing cool mint.',
+                    turkish: 'Tatlı üzüm ve ferahlatıcı nanenin mükemmel uyumu.'
+                }
+            },
+            {
+                id: 103,
+                category: 'shisha',
+                priceIQD: 12000,
+                image: 'https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=400&auto=format&fit=crop&q=80',
+                names: {
+                    badini: 'نێرگیلا لاڤ 66 (Love 66)',
+                    sorani: 'نێرگەلەی لاڤ 66 (Love 66)',
+                    arabic: 'شيشة لاف 66 (Love 66)',
+                    english: 'Love 66 Premium Shisha',
+                    turkish: 'Love 66 Özel Nargile'
+                },
+                descriptions: {
+                    badini: 'تێکەلا میوەیێن استوائی دگەل لیمۆ و هەویێ تافیی.',
+                    sorani: 'تێکەڵەی میوەی خاوەن تام بە هەستێکی تازەکەرەوە.',
+                    arabic: 'خلطة الفواكه الاستوائية الشهيرة مع لمسة من الانتعاش البارد.',
+                    english: 'Famous blend of tropical fruits, passion fruit, watermelon, and icy menthol.',
+                    turkish: 'Tropikal meyveler ve serin mentol karışımlı popüler nargile.'
+                }
+            },
+            {
+                id: 104,
+                category: 'shisha',
+                priceIQD: 12500,
+                image: 'https://images.unsplash.com/photo-1517256064527-09c73fc73e38?w=400&auto=format&fit=crop&q=80',
+                names: {
+                    badini: 'نێرگیلا تایبەت 2cousins Special',
+                    sorani: 'نێرگەلەی تایبەتی 2cousins Special',
+                    arabic: 'شيشة خلطة 2cousins الملكية',
+                    english: '2cousins Signature Mix Shisha',
+                    turkish: '2cousins Özel İmza Nargile'
+                },
+                descriptions: {
+                    badini: 'تێکەلا نهێنی یا تایبەتا کافێیا مە ب سەرا جامی و سۆدایا سار.',
+                    sorani: 'تێکەڵەی نهێنی و تایبەتی کافێی ئێمە لەگەڵ سۆدای سارد.',
+                    arabic: 'خلطتنا السرية الخاصة بالفواكه الملكية ورأس الزجاج المبرد.',
+                    english: 'Our secret signature fruit blend served with ice cup head.',
+                    turkish: 'Buzlu başlık ile servis edilen gizli imza meyve karışımımız.'
+                }
+            },
+            {
+                id: 105,
+                category: 'shisha',
+                priceIQD: 11000,
+                image: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=400&auto=format&fit=crop&q=80',
+                names: {
+                    badini: 'نێرگیلا لیمۆ و نەعناع',
+                    sorani: 'نێرگەلەی لیمۆ و نەعنا',
+                    arabic: 'شيشة ليمون ونعناع',
+                    english: 'Lemon Mint Shisha',
+                    turkish: 'Limon Nane Nargile'
+                },
+                descriptions: {
+                    badini: 'تاما لیمۆیا ترش دگەل نەعناعا گەش.',
+                    sorani: 'تامی لیمۆی ترش لەگەڵ فریشی نەعنا.',
+                    arabic: 'نكهة الحامض المنعش مع النعناع الأخضر الطبيعي.',
+                    english: 'Zesty sour lemon paired with fresh green mint leaves.',
+                    turkish: 'Ferahlatıcı limon ve taze nane yaprakları aroması.'
+                }
+            },
+
+            // ================= HOT DRINKS =================
+            {
+                id: 201,
+                category: 'hot_drinks',
+                priceIQD: 4000,
+                image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=400&auto=format&fit=crop&q=80',
+                names: {
+                    badini: 'قەهوا تورکی ب هێل',
+                    sorani: 'قاوەی تورکی بە هێل',
+                    arabic: 'قهوة تركية بالهيل',
+                    english: 'Turkish Coffee with Cardamom',
+                    turkish: 'Kuleli Türk Kahvesi'
+                },
+                descriptions: {
+                    badini: 'قەهوا گەرم و کەفدار یا برژتی ب بێهنا هێلا ڕەسەن.',
+                    sorani: 'قاوەی گەرم و کەفدار بە بۆنی هێلی ڕەسەن.',
+                    arabic: 'قهوة محامص أصيلة غنية بالرغوة ورائحة الهيل الذكية.',
+                    english: 'Authentic rich Turkish coffee brewed with fresh cardamom.',
+                    turkish: 'Köpüklü ve taze çekilmiş geleneksel Türk kahvesi.'
+                }
+            },
+            {
+                id: 202,
+                category: 'hot_drinks',
+                priceIQD: 5500,
+                image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=400&auto=format&fit=crop&q=80',
+                names: {
+                    badini: 'اسپانیش لاتێ یا گەرم',
+                    sorani: 'ئیسپانیش لاتێی گەرم',
+                    arabic: 'سبانيش لاتيه حار',
+                    english: 'Hot Spanish Latte',
+                    turkish: 'Sıcak İspanyol Latte'
+                },
+                descriptions: {
+                    badini: 'ئاسپریسۆ دگەل شیری شڕین کری و فۆما نەرم.',
+                    sorani: 'ئێسپریسۆ لەگەڵ شیری خەستکراوی شیرین.',
+                    arabic: 'إسبريسو غني مع الحليب المحلى المكثف والرغوة الناعمة.',
+                    english: 'Rich espresso combined with sweetened condensed milk.',
+                    turkish: 'Yoğunlaştırılmış sütlü ve espressolu sıcak İspanyol tatlısı.'
+                }
+            },
+            {
+                id: 203,
+                category: 'hot_drinks',
+                priceIQD: 5000,
+                image: 'https://images.unsplash.com/photo-1534778101976-62847782c213?w=400&auto=format&fit=crop&q=80',
+                names: {
+                    badini: 'کاپوچینۆ کارامێل',
+                    sorani: 'کاپوچینۆی کارامێل',
+                    arabic: 'كابوتشينو كراميل',
+                    english: 'Caramel Cappuccino',
+                    turkish: 'Karamelli Kapuçino'
+                },
+                descriptions: {
+                    badini: 'ئاسپریسۆ دگەل شیری گەرم کری و صۆصا کارامێلی.',
+                    sorani: 'ئێسپریسۆ لەگەڵ شیری کەفدار و کارامێل.',
+                    arabic: 'إسبريسو مع طبقة كثيفة من رغوة الحليب وصوص الكراميل.',
+                    english: 'Double shot espresso topped with thick milk foam & caramel drizzle.',
+                    turkish: 'Köpüklü süt ve karamel soslu zengin kapuçino.'
+                }
+            },
+            {
+                id: 204,
+                category: 'hot_drinks',
+                priceIQD: 3500,
+                image: 'https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=400&auto=format&fit=crop&q=80',
+                names: {
+                    badini: 'چایا شاهانە ب زەعفەران',
+                    sorani: 'چای شاهانە بە زەعفەران',
+                    arabic: 'شاي الزعفران الملكي',
+                    english: 'Royal Saffron Tea',
+                    turkish: 'Safranlı Saray Çayı'
+                },
+                descriptions: {
+                    badini: 'چایا ڕەش یا هندی دگەل تالێن زەعفەرانا سروشتی.',
+                    sorani: 'چای ڕەشی بەرز کە بە تاڵەکانی زەعفەران ئامادەکراوە.',
+                    arabic: 'شاي أحمر فاخر منقوع بخيوط الزعفران الملكي الأصيل.',
+                    english: 'Fine black tea infused with natural golden saffron threads.',
+                    turkish: 'Özel safran lifleri ile demlenmiş saray çayı.'
+                }
+            },
+
+            // ================= COLD DRINKS =================
+            {
+                id: 301,
+                category: 'cold_drinks',
+                priceIQD: 6000,
+                image: 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=400&auto=format&fit=crop&q=80',
+                names: {
+                    badini: 'ئایس اسپانیش لاتێ',
+                    sorani: 'ئایس ئیسپانیش لاتێ',
+                    arabic: 'سبانيش لاتيه بارد',
+                    english: 'Iced Spanish Latte',
+                    turkish: 'Buzlu İspanyol Latte'
+                },
+                descriptions: {
+                    badini: 'ئاسپریسۆیا سار دگەل بەفرێ و شیری شیرین کری.',
+                    sorani: 'ئێسپریسۆی ساردکراوە لەگەڵ سەهۆڵ و شیری شیرین.',
+                    arabic: 'إسبريسو مثلج مع حليب مكثف محلى وطبقة كريمة باردة.',
+                    english: 'Double shot espresso over ice with condensed sweet milk.',
+                    turkish: 'Buz ve tatlı süt ile servis edilen soğuk espresso.'
+                }
+            },
+            {
+                id: 302,
+                category: 'cold_drinks',
+                priceIQD: 5500,
+                image: 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?w=400&auto=format&fit=crop&q=80',
+                names: {
+                    badini: 'مۆهیتۆ باشن فرۆت (Passion Fruit)',
+                    sorani: 'مۆهیتۆی پاشن فڕوت',
+                    arabic: 'موهيتو باشن فروت المنعش',
+                    english: 'Passion Fruit Mojito',
+                    turkish: 'Passiflora Mojito'
+                },
+                descriptions: {
+                    badini: 'عەعنوک، لیمۆ، میوا باشن فرۆت دگەل سۆدایا فوار.',
+                    sorani: 'نەعنای تازە، لیمۆ، میوەی پاشن فڕوت و سۆدا.',
+                    arabic: 'نعناع طازج، ليمون، باشن فروت وصودا فوارة باردة.',
+                    english: 'Fresh mint leaves, muddled lime, passion fruit pulp & soda.',
+                    turkish: 'Taze nane, misket limonu, çarkıfelek meyvesi ve ferah soda.'
+                }
+            },
+            {
+                id: 303,
+                category: 'cold_drinks',
+                priceIQD: 6500,
+                image: 'https://images.unsplash.com/photo-1536256263959-770b48d82b0a?w=400&auto=format&fit=crop&q=80',
+                names: {
+                    badini: 'سمووزی مانگۆ و خۆخ',
+                    sorani: 'سمووسی مانگۆ و قۆخ',
+                    arabic: 'سموذي المانجو والخوخ الطبيعي',
+                    english: 'Mango Peach Smoothie',
+                    turkish: 'Mango Şeftali Smoothie'
+                },
+                descriptions: {
+                    badini: 'شەربەتا مانگۆ و خۆخا فریش دگەل بەفرێ.',
+                    sorani: 'شەربەتی مانگۆ و قۆخی فرێش لەگەڵ سەهۆڵ.',
+                    arabic: 'عصير المانجو الطازج مع قطع الخوخ اللذيذة والثلج.',
+                    english: 'Blend of fresh mangoes, sweet peaches, and crushed ice.',
+                    turkish: 'Taze mango ve şeftalili buzlu serinletici içecek.'
+                }
+            },
+
+            // ================= DESSERTS =================
+            {
+                id: 401,
+                category: 'desserts',
+                priceIQD: 7500,
+                image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&auto=format&fit=crop&q=80',
+                names: {
+                    badini: 'شیزکێک سان سیباستیان',
+                    sorani: 'سان سیباستیان چیزکێک',
+                    arabic: 'تشيز كيك سان سيباستيان',
+                    english: 'San Sebastian Cheesecake',
+                    turkish: 'San Sebastian Cheesecake'
+                },
+                descriptions: {
+                    badini: 'کێکا پەنیرێ یا برژتی دگەل صۆصا شوکولاتەیا بلجیکی.',
+                    sorani: 'چیزکێکی برژاوی بەتام کە لەگەڵ شوکولاتەی بەلجیکی پێشکەش دەکرێت.',
+                    arabic: 'تشيز كيك الباسك المخبوز يقدم مع شوكولاتة بلجيكية دافئة.',
+                    english: 'Creamy burnt Basque cheesecake served with rich Belgian chocolate dip.',
+                    turkish: 'Sıcak Belçika çikolatası soslu meşhur yanık cheesecake.'
+                }
+            },
+            {
+                id: 402,
+                category: 'desserts',
+                priceIQD: 7000,
+                image: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=400&auto=format&fit=crop&q=80',
+                names: {
+                    badini: 'کێک لاڤا (Choco Lava Cake)',
+                    sorani: 'کێکی شوکولاتەی لاڤا',
+                    arabic: 'كيكة الشوكولاتة الذائبة (لافا)',
+                    english: 'Molten Chocolate Lava Cake',
+                    turkish: 'Sıcak Çikolatalı Sufle'
+                },
+                descriptions: {
+                    badini: 'کێکا گەرما شوکولاتێ دگەل تۆپا ئایسکریما ڤانیلا.',
+                    sorani: 'کێکی شوکولاتەی گەرم بە دڵێکی توواوەوە لەگەڵ ئایسکرێمی ڤانیلا.',
+                    arabic: 'كيكة شوكولاتة ساخنة بحشوة ذائبة تقدم مع آيس كريم فانيليا.',
+                    english: 'Warm chocolate cake with molten center & vanilla bean ice cream.',
+                    turkish: 'Akışkan çikolatalı sıcak sufle ve vanilyalı dondurma.'
+                }
+            },
+
+            // ================= SNACKS & SANDWICHES =================
+            {
+                id: 501,
+                category: 'snacks',
+                priceIQD: 8500,
+                image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&auto=format&fit=crop&q=80',
+                names: {
+                    badini: 'کلۆب ساندویچ 2cousins',
+                    sorani: 'کڵەب ساندویچی 2cousins',
+                    arabic: 'كلوب ساندويتش الفاخر',
+                    english: '2cousins Club Sandwich',
+                    turkish: 'Kulüp Sandviç Tabağı'
+                },
+                descriptions: {
+                    badini: 'نانێ توست دگەل گوشتێ مریشکێ، هێلۆک، پەنیر و فینگەرا.',
+                    sorani: 'نانی توست بە گۆشتی مریشک، هێلکە، پەنیر و پەتاتەی فینگەر.',
+                    arabic: 'طبقات الخبز المحمص مع الدجاج المشوي، البيض، الجبن والفريز.',
+                    english: 'Triple-decker toasted bread with grilled chicken, egg, cheese & fries.',
+                    turkish: 'Izgara tavuk, yumurta, peynir ve patates kızartmalı sandviç.'
+                }
+            },
+            {
+                id: 502,
+                category: 'snacks',
+                priceIQD: 5000,
+                image: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=400&auto=format&fit=crop&q=80',
+                names: {
+                    badini: 'فینگەر ب پەنیرا تویاوی (Loaded Fries)',
+                    sorani: 'پەتاتەی لۆدد بە پەنیر',
+                    arabic: 'بطاطس المقلية بالجبنة والمقبلات',
+                    english: 'Loaded Cheese Fries',
+                    turkish: 'Peynirli Patates Kızartması'
+                },
+                descriptions: {
+                    badini: 'فینگەرا گەرم دگەل پەنیرا شێدار، صۆصا تایبەت و هالاپینۆ.',
+                    sorani: 'پەتاتەی سوورکراوە لەگەڵ پەنیری جێدار و سۆسی تایبەت.',
+                    arabic: 'بطاطس مقرمشة مغطاة بصلصة الجبن الذائبة وهالابينو.',
+                    english: 'Crispy golden fries drenched in melted cheddar sauce & jalapenos.',
+                    turkish: 'Eritilmiş çedar peyniri ve özel soslu çıtır patates.'
+                }
+            }
+        ];
+
+        // INITIAL ONLOAD
+        window.onload = function() {
+            renderTableGrid();
+        };
+
+        // ================= PAGE 1 LOGIC (LANGUAGE & DIALECT) =================
+        function handleLanguageSelect(lang) {
+            const kurdishDialects = document.getElementById('kurdishDialects');
+            const kurdishArrow = document.getElementById('kurdish-arrow');
+
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+
+            if (lang === 'kurdish') {
+                const isHidden = kurdishDialects.classList.contains('hidden');
+                if (isHidden) {
+                    kurdishDialects.classList.remove('hidden');
+                    kurdishArrow.style.transform = 'rotate(180deg)';
+                } else {
+                    kurdishDialects.classList.add('hidden');
+                    kurdishArrow.style.transform = 'rotate(0deg)';
+                }
+                document.getElementById('btn-kurdish').classList.add('active');
+                return;
+            } else {
+                kurdishDialects.classList.add('hidden');
+                if (kurdishArrow) kurdishArrow.style.transform = 'rotate(0deg)';
+            }
+
+            selectedLanguage = lang;
+            document.getElementById(`btn-${lang}`).classList.add('active');
+            showEnterButton(lang);
+        }
+
+        function handleDialectSelect(dialect) {
+            document.querySelectorAll('.dialect-btn').forEach(btn => {
+                btn.classList.remove('bg-gold', 'text-black');
+                btn.classList.add('bg-cafe-brown/90', 'text-gold-light');
+            });
+            
+            document.getElementById('check-badini').classList.add('opacity-0');
+            document.getElementById('check-sorani').classList.add('opacity-0');
+
+            const activeBtn = document.getElementById(`btn-${dialect}`);
+            activeBtn.classList.remove('bg-cafe-brown/90', 'text-gold-light');
+            activeBtn.classList.add('bg-gold', 'text-black');
+            document.getElementById(`check-${dialect}`).classList.remove('opacity-0');
+
+            selectedLanguage = dialect;
+            showEnterButton(dialect);
+        }
+
+        function showEnterButton(langKey) {
+            const enterContainer = document.getElementById('enterButtonContainer');
+            const enterBtnText = document.getElementById('enterBtnText');
+            const enterBtnIcon = document.getElementById('enterBtnIcon');
+            const translation = translations[langKey];
+
+            enterBtnText.innerText = translation.enterBtn;
+            enterContainer.classList.remove('hidden');
+
+            if (translation.direction === 'rtl') {
+                enterBtnIcon.className = 'fa-solid fa-arrow-left text-lg';
+            } else {
+                enterBtnIcon.className = 'fa-solid fa-arrow-right text-lg';
+            }
+        }
+
+        // NAVIGATION: PAGE 1 -> PAGE 2 (TABLE SELECTION)
+        function goToTableSelection() {
+            // Hide Page 1
+            document.getElementById('languageScreen').classList.add('hidden');
+            document.getElementById('menuScreen').classList.add('hidden');
+            
+            // HIDE WIFI BUTTON PERMANENTLY WHEN LEAVING PAGE 1
+            document.getElementById('wifiBtnContainer').classList.add('hidden');
+
+            // Show Page 2
+            const tableScreen = document.getElementById('tableScreen');
+            tableScreen.classList.remove('hidden');
+
+            // Set Directionality & Text for Table Screen
+            const langConfig = translations[selectedLanguage];
+            document.documentElement.dir = langConfig.direction;
+            document.getElementById('tableScreenTitle').innerText = langConfig.tableTitle;
+            document.getElementById('tableScreenSubtitle').innerText = langConfig.tableSubtitle;
+            document.getElementById('btnBackLang').innerText = langConfig.tableBack;
+            
+            updateConfirmTableButton();
+            window.scrollTo(0, 0);
+        }
+
+        function backToLanguageSelection() {
+            document.getElementById('tableScreen').classList.add('hidden');
+            document.getElementById('menuScreen').classList.add('hidden');
+            
+            // RE-SHOW WIFI BUTTON ONLY ON PAGE 1
+            document.getElementById('wifiBtnContainer').classList.remove('hidden');
+
+            document.getElementById('languageScreen').classList.remove('hidden');
+            document.documentElement.dir = 'ltr';
+        }
+
+
+        // ================= PAGE 2 LOGIC (3x5 TABLE GRID) =================
+        function renderTableGrid() {
+            const grid = document.getElementById('tablesGrid');
+            let html = '';
+
+            for (let i = 1; i <= 15; i++) {
+                html += `
+                    <button onclick="selectTable(${i})" id="table-btn-${i}" class="table-card glass-panel h-20 sm:h-24 rounded-2xl border border-gold/30 flex flex-col items-center justify-center gap-1 hover:border-gold hover:scale-105 active:scale-95 transition-all">
+                        <i class="fa-solid fa-chair text-lg sm:text-xl text-gold/70 transition-colors"></i>
+                        <span class="text-xs sm:text-sm font-extrabold font-mono text-white">T-${i}</span>
+                    </button>
+                `;
+            }
+            grid.innerHTML = html;
+        }
+
+        function selectTable(tableNum) {
+            selectedTableNumber = tableNum;
+
+            // Clear previous selection highlight
+            for (let i = 1; i <= 15; i++) {
+                const btn = document.getElementById(`table-btn-${i}`);
+                if (btn) {
+                    btn.classList.remove('bg-gold', 'text-black', 'border-gold', 'shadow-lg', 'shadow-gold/40');
+                    btn.classList.add('glass-panel');
+                    const icon = btn.querySelector('i');
+                    const text = btn.querySelector('span');
+                    if (icon) icon.className = 'fa-solid fa-chair text-lg sm:text-xl text-gold/70';
+                    if (text) text.className = 'text-xs sm:text-sm font-extrabold font-mono text-white';
+                }
+            }
+
+            // Highlight selected table button
+            const activeBtn = document.getElementById(`table-btn-${tableNum}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('glass-panel');
+                activeBtn.classList.add('bg-gold', 'text-black', 'border-gold', 'shadow-lg', 'shadow-gold/40');
+                const icon = activeBtn.querySelector('i');
+                const text = activeBtn.querySelector('span');
+                if (icon) icon.className = 'fa-solid fa-chair text-lg sm:text-xl text-black';
+                if (text) text.className = 'text-xs sm:text-sm font-extrabold font-mono text-black';
+            }
+
+            updateConfirmTableButton();
+        }
+
+        function updateConfirmTableButton() {
+            const btn = document.getElementById('btnConfirmTable');
+            const btnText = document.getElementById('btnConfirmTableText');
+            const langConfig = translations[selectedLanguage];
+
+            if (selectedTableNumber !== null) {
+                btn.disabled = false;
+                btn.className = 'w-full sm:w-2/3 py-3.5 rounded-xl gold-btn-solid font-bold text-base cursor-pointer transition-all';
+                btnText.innerText = `${langConfig.tableConfirmPrefix} ${selectedTableNumber}`;
+            } else {
+                btn.disabled = true;
+                btn.className = 'w-full sm:w-2/3 py-3.5 rounded-xl bg-gray-800 text-gray-500 font-bold text-base cursor-not-allowed transition-all border border-gold/10';
+                btnText.innerText = langConfig.tableSelectPrompt;
+            }
+        }
+
+        // NAVIGATION: PAGE 2 -> PAGE 3 (MAIN MENU)
+        function confirmTableAndOpenMenu() {
+            if (!selectedTableNumber) return;
+
+            document.getElementById('tableScreen').classList.add('hidden');
+            const menuScreen = document.getElementById('menuScreen');
+            menuScreen.classList.remove('hidden');
+
+            const langConfig = translations[selectedLanguage];
+            document.documentElement.dir = langConfig.direction;
+            
+            document.getElementById('headerTableBadge').innerText = `${langConfig.tableLabel} ${selectedTableNumber}`;
+            document.getElementById('dialectBadge').innerText = langConfig.name;
+            document.getElementById('searchInput').placeholder = langConfig.searchPlaceholder;
+
+            renderCategoryBar();
+            renderMenuItems();
+            updateCartUI();
+
+            window.scrollTo(0, 0);
+        }
+
+
+        // ================= PAGE 3 LOGIC (MENU DISPLAY & FILTERS) =================
+        function renderCategoryBar() {
+            const categoryBar = document.getElementById('categoryBar');
+            const catTranslations = translations[selectedLanguage].categories;
+            const categoryKeys = ['shisha', 'hot_drinks', 'cold_drinks', 'desserts', 'snacks'];
+
+            let html = '';
+            categoryKeys.forEach(catKey => {
+                const isActive = catKey === selectedCategory;
+                const activeClasses = isActive 
+                    ? 'bg-gold text-black font-extrabold border-gold shadow-md shadow-gold/25' 
+                    : 'bg-cafe-brown/80 text-gold-light border-gold/30 hover:border-gold';
+
+                html += `
+                    <button onclick="changeCategory('${catKey}')" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap border transition-all ${activeClasses}">
+                        ${catTranslations[catKey]}
+                    </button>
+                `;
+            });
+
+            categoryBar.innerHTML = html;
+            document.getElementById('currentCategoryTitle').innerText = catTranslations[selectedCategory];
+        }
+
+        function changeCategory(catKey) {
+            selectedCategory = catKey;
+            renderCategoryBar();
+            renderMenuItems();
+        }
+
+        function formatPrice(iqdVal) {
+            const langConfig = translations[selectedLanguage];
+            return `${iqdVal.toLocaleString()} ${langConfig.currency}`;
+        }
+
+        function renderMenuItems() {
+            const grid = document.getElementById('menuItemsGrid');
+            const searchKeyword = document.getElementById('searchInput').value.toLowerCase().trim();
+            const langConfig = translations[selectedLanguage];
+
+            const filteredItems = menuItems.filter(item => {
+                const isCategoryMatch = item.category === selectedCategory;
+                const itemName = (item.names[selectedLanguage] || item.names['english']).toLowerCase();
+                const itemDesc = (item.descriptions[selectedLanguage] || item.descriptions['english']).toLowerCase();
+                return isCategoryMatch && (itemName.includes(searchKeyword) || itemDesc.includes(searchKeyword));
+            });
+
+            document.getElementById('itemCountBadge').innerText = `${filteredItems.length} ${langConfig.itemsCount}`;
+
+            if (filteredItems.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full py-12 text-center text-gray-400">
+                        <i class="fa-solid fa-mug-saucer text-4xl mb-3 text-gold/40"></i>
+                        <p class="text-sm">No items found matching search query.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+            filteredItems.forEach(item => {
+                const name = item.names[selectedLanguage] || item.names['english'];
+                const desc = item.descriptions[selectedLanguage] || item.descriptions['english'];
+                const priceFormatted = formatPrice(item.priceIQD);
+                
+                const cartItem = cart.find(c => c.id === item.id);
+                const quantityInCart = cartItem ? cartItem.count : 0;
+
+                html += `
+                    <div class="glass-panel rounded-2xl p-4 flex gap-4 items-center border border-gold/20 hover:border-gold/60 transition-all duration-300">
+                        <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-xl overflow-hidden relative flex-shrink-0 border border-gold/30 shadow-md">
+                            <img src="${item.image}" alt="${name}" class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500" loading="lazy">
+                        </div>
+                        
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-start justify-between gap-2 mb-1">
+                                <h4 class="font-extrabold text-white text-base sm:text-lg leading-tight truncate">${name}</h4>
+                            </div>
+                            <p class="text-xs sm:text-sm text-gray-300 line-clamp-2 leading-relaxed mb-3">${desc}</p>
+                            
+                            <div class="flex items-center justify-between mt-auto">
+                                <span class="text-gold font-extrabold font-mono text-xs sm:text-sm bg-gold/10 px-2.5 py-1 rounded border border-gold/30">${priceFormatted}</span>
+                                
+                                ${quantityInCart > 0 ? `
+                                    <div class="flex items-center gap-2 bg-gold/20 border border-gold/40 rounded-lg p-1">
+                                        <button onclick="updateCartQuantity(${item.id}, -1)" class="w-6 h-6 rounded bg-gold text-black font-extrabold text-xs flex items-center justify-center">-</button>
+                                        <span class="text-xs font-extrabold text-white px-1 font-mono">${quantityInCart}</span>
+                                        <button onclick="updateCartQuantity(${item.id}, 1)" class="w-6 h-6 rounded bg-gold text-black font-extrabold text-xs flex items-center justify-center">+</button>
+                                    </div>
+                                ` : `
+                                    <button onclick="addToCart(${item.id})" class="text-xs text-gold border border-gold/40 hover:bg-gold hover:text-black font-bold px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 shadow-sm">
+                                        <i class="fa-solid fa-plus text-[10px]"></i>
+                                        <span>${langConfig.addToCart}</span>
+                                    </button>
+                                `}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            grid.innerHTML = html;
+        }
+
+        function filterMenu() {
+            renderMenuItems();
+        }
+
+
+        // ================= CART LOGIC =================
+        function addToCart(itemId) {
+            const existing = cart.find(item => item.id === itemId);
+            if (existing) {
+                existing.count++;
+            } else {
+                cart.push({ id: itemId, count: 1 });
+            }
+            updateCartUI();
+            renderMenuItems();
+        }
+
+        function updateCartQuantity(itemId, delta) {
+            const index = cart.findIndex(item => item.id === itemId);
+            if (index !== -1) {
+                cart[index].count += delta;
+                if (cart[index].count <= 0) {
+                    cart.splice(index, 1);
+                }
+            }
+            updateCartUI();
+            renderMenuItems();
+            renderCartModalItems();
+        }
+
+        function clearCart() {
+            cart = [];
+            updateCartUI();
+            renderMenuItems();
+            renderCartModalItems();
+        }
+
+        function updateCartUI() {
+            const totalItems = cart.reduce((sum, item) => sum + item.count, 0);
+            document.getElementById('cartBadge').innerText = totalItems;
+        }
+
+        function openCartModal() {
+            const langConfig = translations[selectedLanguage];
+            document.getElementById('cartTitle').innerText = langConfig.cartTitle;
+            document.getElementById('cartTableSummary').innerText = `${langConfig.tableLabel} ${selectedTableNumber || '--'}`;
+            document.getElementById('cartTotalLabel').innerText = langConfig.cartTotal;
+            document.getElementById('btnClearCart').innerText = langConfig.clearCart;
+            document.getElementById('btnCheckoutText').innerText = langConfig.checkout;
+
+            renderCartModalItems();
+            document.getElementById('cartModal').classList.remove('hidden');
+        }
+
+        function closeCartModal() {
+            document.getElementById('cartModal').classList.add('hidden');
+        }
+
+        function renderCartModalItems() {
+            const container = document.getElementById('cartItemsContainer');
+            const langConfig = translations[selectedLanguage];
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="py-10 text-center text-gray-400">
+                        <i class="fa-solid fa-basket-shopping text-4xl mb-3 text-gold/30"></i>
+                        <p class="text-sm">${langConfig.cartEmpty}</p>
+                    </div>
+                `;
+                document.getElementById('cartTotalPrice').innerText = formatPrice(0);
+                return;
+            }
+
+            let html = '';
+            let grandTotalIQD = 0;
+
+            cart.forEach(cartItem => {
+                const menuItem = menuItems.find(m => m.id === cartItem.id);
+                if (!menuItem) return;
+
+                const name = menuItem.names[selectedLanguage] || menuItem.names['english'];
+                const itemTotal = menuItem.priceIQD * cartItem.count;
+                grandTotalIQD += itemTotal;
+
+                html += `
+                    <div class="flex items-center justify-between p-3 rounded-xl bg-cafe-black/90 border border-gold/20">
+                        <div class="flex items-center gap-3">
+                            <img src="${menuItem.image}" class="w-12 h-12 rounded-lg object-cover border border-gold/30">
+                            <div>
+                                <h5 class="text-sm font-extrabold text-white">${name}</h5>
+                                <span class="text-xs text-gold font-mono">${formatPrice(menuItem.priceIQD)}</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="flex items-center gap-1.5 bg-gold/10 border border-gold/30 rounded-lg p-1">
+                                <button onclick="updateCartQuantity(${menuItem.id}, -1)" class="w-5 h-5 rounded bg-gold text-black font-extrabold text-xs flex items-center justify-center">-</button>
+                                <span class="text-xs font-extrabold text-white font-mono px-1">${cartItem.count}</span>
+                                <button onclick="updateCartQuantity(${menuItem.id}, 1)" class="w-5 h-5 rounded bg-gold text-black font-extrabold text-xs flex items-center justify-center">+</button>
+                            </div>
+                            <span class="text-xs sm:text-sm font-extrabold font-mono text-gold min-w-[65px] text-right">${formatPrice(itemTotal)}</span>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+            document.getElementById('cartTotalPrice').innerText = formatPrice(grandTotalIQD);
+        }
+
+        function checkoutOrder() {
+            if (cart.length === 0) return;
+            const langConfig = translations[selectedLanguage];
+            
+            showToast(`${langConfig.orderSuccess} ${selectedTableNumber}!`, 'fa-circle-check');
+            cart = [];
+            updateCartUI();
+            renderMenuItems();
+            closeCartModal();
+        }
+
+
+        // ================= WAITER CALL FEATURE =================
+        function callWaiter() {
+            const langConfig = translations[selectedLanguage];
+            const msg = `${langConfig.waiterCalled} ${selectedTableNumber || '1'}!`;
+            showToast(msg, 'fa-bell');
+        }
+
+
+        // ================= WIFI MODAL LOGIC =================
+        function openWifiModal() {
+            const langConfig = translations[selectedLanguage] || translations['badini'];
+            document.getElementById('wifiModalTitle').innerText = langConfig.wifiTitle;
+            document.getElementById('wifiModalSubtitle').innerText = langConfig.wifiSubtitle;
+            document.getElementById('labelNetwork').innerText = langConfig.networkLabel;
+            document.getElementById('labelPassword').innerText = langConfig.passwordLabel;
+            document.getElementById('copyBtnText').innerText = langConfig.copyBtn;
+            
+            document.getElementById('wifiModal').classList.remove('hidden');
+        }
+
+        function closeWifiModal() {
+            document.getElementById('wifiModal').classList.add('hidden');
+        }
+
+        function copyWifiPassword() {
+            const password = '2cousins2026';
+            const langConfig = translations[selectedLanguage] || translations['badini'];
+
+            const tempInput = document.createElement('input');
+            tempInput.value = password;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+
+            showToast(langConfig.copiedMsg, 'fa-circle-check');
+        }
+
+
+        // ================= TOAST NOTIFICATION UTILITY =================
+        function showToast(message, iconClass = 'fa-circle-check') {
+            const toast = document.getElementById('toast');
+            const toastIcon = document.getElementById('toastIcon');
+            
+            toastIcon.className = `fa-solid ${iconClass} text-lg`;
+            document.getElementById('toastMsg').innerText = message;
+            
+            toast.classList.remove('-translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('-translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
